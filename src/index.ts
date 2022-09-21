@@ -2,8 +2,8 @@ import express from'express';
 import cors from 'cors';
 import wildersController from'./controller/wilders';
 import skillsController from './controller/skills';
+import datasource from './db'
 
-import datasource from'./db';
 
 const app = express();
 
@@ -30,4 +30,4 @@ const start = async (): Promise <void>=> {
   });
 };
 
-start();
+void start();

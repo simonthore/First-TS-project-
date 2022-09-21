@@ -1,7 +1,8 @@
-const datasource = require('../db');
-const Skill = require('../entity/Skill');
+import datasource from '../db';
+import Skill from'../entity/Skill';
+import { IController } from "./../types/IController";
 
-module.exports = {
+const skillsController: IController = {
   create: async (req, res) => {
     const { name } = req.body;
     if (name.length > 100 || name.length === 0) {
@@ -14,7 +15,7 @@ module.exports = {
       .getRepository(Skill)
       .findOneBy({ name });
 
-    if (existingSkill)
+    if (existingSkill !== null )
       return res.status(409).send('a skill with this name already exists');
 
     try {
@@ -46,7 +47,7 @@ module.exports = {
       const { affected } = await datasource
         .getRepository(Skill)
         .update(req.params.id, req.body);
-      if (affected) return res.send('skill updated');
+      if (affected !== 0) return res.send('skill updated');
       res.sendStatus(404);
     } catch (err) {
       console.error(err);
@@ -58,10 +59,11 @@ module.exports = {
       const { affected } = await datasource
         .getRepository(Skill)
         .delete(req.params.id);
-      if (affected) return res.send('skill deleted');
+      if (affected !== 0) return res.send('skill deleted');
       res.sendStatus(404);
     } catch (err) {
       console.error(err);
     }
   },
 };
+export default skillsController

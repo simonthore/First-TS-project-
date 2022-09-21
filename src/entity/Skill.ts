@@ -1,26 +1,15 @@
-import { PrimaryGeneratedColumn } from "typeorm";
-
-const EntitySchema = require('typeorm').EntitySchema;
-
-module.exports = new EntitySchema({
-  name: 'Skill',
-  columns: {
-    id: {
-      primary: true,
-      type: 'int',
-      generated: true,
-    },
-    name: {
-      type: 'text',
-      unique: true,
-    },
-  },
-});
-
+import { PrimaryGeneratedColumn, Entity, Column, OneToMany } from "typeorm";
+import Grade from "./Grade";
 @Entity ()
 class Skill {
   @PrimaryGeneratedColumn()
   id: number 
 
-  @column
+  @Column()
+   name: string;
+
+   @OneToMany(()=> Grade, grade => grade.skill)
+   grades: Grade[]
 }
+
+export default Skill

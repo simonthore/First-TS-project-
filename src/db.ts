@@ -1,11 +1,13 @@
-const typeorm = require('typeorm');
-const Wilder = require('./entity/Wilder');
-const Skill = require('./entity/Skill');
+import { DataSource } from "typeorm";
+import Wilder from './entity/Wilder';
+import Skill from './entity/Skill';
+import Grade from "./entity/Grade";
 
-module.exports = new typeorm.DataSource({
+export default new DataSource({
   type: 'sqlite',
   database: './wildersdb.sqlite',
   synchronize: true,
-  entities: [Wilder, Skill],
+  entities: [Wilder, Skill, Grade],
   logging: [ 'error'],
 });
+
